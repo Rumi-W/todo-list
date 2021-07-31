@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useParams } from 'react-router-dom'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Button from '@material-ui/core/Button'
@@ -9,30 +10,25 @@ import { sortByTitle, sortByTitleDesc } from '../../utils'
 import axios from '../../config/axios-setup'
 import './styles.css'
 
-const TodoList = ({ handleSelectItem }) => {
+const TodoList = ({ handleSelectItem, goToCurrentUserData, goBackHome }) => {
   const [isSortDesc, setIsSortDesc] = useState(false)
   const [origItems, setOrigItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
-
-  const userId = 1
+  const { userId } = useParams()
 
   useEffect(() => {
-    const url = `todos`
-    //const url = `todos?userId=${userId}`
+    const url = userId ? `todos?userId=${userId}` : `todos`
     const fetchData = async () => {
       try {
-        console.log('fetching')
         const response = await axios({ url, method: 'GET' })
-        const data = response.data
-        data.sort(sortByTitle)
-        setOrigItems([...data])
-        setSelectedItems([...data])
+        setOrigItems([...response.data])
+        setSelectedItems([...response.data])
       } catch (e) {
         console.log('Error')
       }
     }
     fetchData()
-  }, [])
+  }, [userId])
 
   const debounce = (func, wait) => {
     let timeoutId = null
@@ -71,6 +67,16 @@ const TodoList = ({ handleSelectItem }) => {
     setSelectedItems([...selectedItems])
   }
 
+  const goToUserData = (e) => {
+    e.stopPropagation()
+    goToCurrentUserData()
+  }
+
+  const goBackToHome = (e) => {
+    e.stopPropagation()
+    goBackHome()
+  }
+
   const Row = ({ index, style }) => {
     return (
       <div
@@ -91,14 +97,23 @@ const TodoList = ({ handleSelectItem }) => {
     )
   }
 
-  console.log('list', selectedItems)
   return (
     <div className="fade-in top-padding">
       <Grid item xs={12} className="flex-container">
         <Typography variant="h3">ToDo List</Typography>
       </Grid>
       <Grid item xs={12} className="flex-container">
-        <Typography variant="h6">User: {userId}</Typography>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={goToUserData}
+          color="secondary"
+          style={{ marginRight: '2px' }}>
+          My Items
+        </Button>
+        <Button size="small" variant="contained" onClick={goBackToHome} color="secondary">
+          All Items
+        </Button>
       </Grid>
       <Grid item xs={12} className="flex-container">
         <SearchInput filterItems={filterItems} resetList={resetList} />

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default () => {
+export default ({ currentUserId }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -31,7 +31,7 @@ export default () => {
             <span className="material-icons" style={{ fontSize: '28px' }}>
               account_circle
             </span>
-            <Typography className={classes.userName}>User 1</Typography>
+            <Typography className={classes.userName}>User {currentUserId}</Typography>
           </div>
         </Toolbar>
       </AppBar>

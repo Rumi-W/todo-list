@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles()
   const history = useHistory()
+  const currentUserId = 5 // Assume a User is loggin in
 
   const handleSelectItem = useCallback(
     (selectedId) => {
@@ -26,29 +27,45 @@ const App = () => {
     [history]
   )
 
+  const handleSelectUser = useCallback(() => {
+    history.push(`/user/${currentUserId}`)
+  }, [history])
+
+  const goHome = useCallback(() => {
+    history.push(`/`)
+  }, [history])
+
   const handleUpdateItem = useCallback(async (updatedItem) => {
-    console.log(updatedItem)
     const url = `todos/${updatedItem.id}`
     const data = JSON.stringify(updatedItem)
 
     try {
       const response = await axios({ url, method: 'PUT', body: data })
-      console.log(response.data)
     } catch (e) {
       console.log('Error')
     }
   }, [])
 
-  console.log('app')
   return (
     <Container maxWidth="xl" className="fade-in" style={{ padding: 0 }}>
-      <NavBar />
+      <NavBar currentUserId={currentUserId} />
       <Switch>
+        <Route path="/user/:userId">
+          <TodoList
+            handleSelectItem={handleSelectItem}
+            goToCurrentUserData={handleSelectUser}
+            goBackHome={goHome}
+          />
+        </Route>
         <Route path="/:id">
-          <TodoItem handleSelectItem={handleSelectItem} handleUpdateItem={handleUpdateItem} />
+          <TodoItem handleUpdateItem={handleUpdateItem} />
         </Route>
         <Route exact path="/">
-          <TodoList handleSelectItem={handleSelectItem} />
+          <TodoList
+            handleSelectItem={handleSelectItem}
+            goToCurrentUserData={handleSelectUser}
+            goBackHome={goHome}
+          />
         </Route>
       </Switch>
     </Container>

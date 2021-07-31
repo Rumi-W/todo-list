@@ -66,7 +66,6 @@ const TodoItem = ({ handleUpdateItem }) => {
     const fetchData = async () => {
       try {
         const response = await axios({ url, method: 'GET' })
-        console.log(response.data)
         setItem(response.data[0])
         setCompleted(response.data[0].completed)
       } catch (e) {
@@ -83,7 +82,8 @@ const TodoItem = ({ handleUpdateItem }) => {
   }
 
   const goBack = () => {
-    history.push('/')
+    //history.push('/')
+    history.goBack()
   }
 
   const title = `Item No. ${item.id}`

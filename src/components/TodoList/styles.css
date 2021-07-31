@@ -30,7 +30,7 @@
 }
 /* Virtualized list */
 .List {
-  border: 1px solid #d9dddd;
+  border: 1px solid #edf5fd;
 }
 .ListItemEven,
 .ListItemOdd {
@@ -54,7 +54,7 @@
 
 @media screen and (min-width: 1281px) {
   .list-wrap {
-    width: 40vw;
+    width: 36vw;
   }
 }
 @media screen and (max-width: 1280px) {

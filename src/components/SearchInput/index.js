@@ -17,7 +17,7 @@ const SearchInput = ({ filterItems, resetList }) => {
     <input
       className="search-field"
       type="text"
-      placeholder="Search Items by Keyword."
+      placeholder="Search by a Keyword."
       value={searchText}
       onChange={handleChange}
       tabIndex={-1}
