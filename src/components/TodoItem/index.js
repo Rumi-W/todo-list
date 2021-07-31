@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -8,11 +9,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
 import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography'
+import axios from '../../config/axios-setup'
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: '40px'
   },
   flexContainer2: {
     display: 'flex',
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   switch: {
     textAlign: 'right',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.only('xs')]: {
       textAlign: 'left'
     }
   },
@@ -45,27 +48,45 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid rgba(97, 97, 97, 0.2)'
   },
   action: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    justifyContent: 'flex-end'
   }
 }))
 
-const TodoItem = ({ item }) => {
+const TodoItem = () => {
+  const history = useHistory()
+  const { id } = useParams()
   const classes = useStyles()
+
+  const [item, setItem] = useState({})
   const [completed, setCompleted] = useState(false)
 
+  // useEffect(() => {
+  //   setCompleted(item.completed)
+  // }, [item.completed])
   useEffect(() => {
-    setCompleted(item.completed)
-  }, [item.completed])
+    const url = `todos?id=${id}`
+    const fetchData = async () => {
+      const response = await axios({ url })
+      console.log(response.data)
+      setItem(response.data[0])
+    }
+    fetchData()
+  }, [id])
 
   const handleStatusChange = () => {
     setCompleted((prev) => !prev)
   }
 
+  const goBack = () => {
+    history.push('/')
+  }
+
   const title = `Item No. ${item.id}`
   return (
-    <React.Fragment>
+    <div className="fade-in">
       <Grid item xs={12} className={classes.flexContainer}>
-        <Typography variant="h4">ToDo List Item</Typography>
+        <Typography variant="h3">ToDo List Item</Typography>
       </Grid>
       <Grid item xs={12} className={classes.flexContainer}>
         <Card className={classes.root} elevation={2}>
@@ -95,13 +116,13 @@ const TodoItem = ({ item }) => {
             </Grid>
           </CardContent>
           <CardActions className={classes.action}>
-            <Button size="large" color="secondary">
+            <Button size="large" color="secondary" onClick={goBack} tabIndex={0}>
               Close
             </Button>
           </CardActions>
         </Card>
       </Grid>
-    </React.Fragment>
+    </div>
   )
 }
 

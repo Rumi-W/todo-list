@@ -104,6 +104,10 @@ const theme = createTheme({
       //   }
     },
     MuiTypography: {
+      h3: {
+        color: '#616161',
+        fontFamily: 'Montserrat, sans-serif'
+      },
       h4: {
         color: '#616161',
         fontFamily: 'Montserrat, sans-serif'

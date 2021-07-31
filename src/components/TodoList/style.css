@@ -1,5 +1,5 @@
-h1 {
-  text-align: center;
+.main {
+  padding-top: 50px;
 }
 
 ul {
@@ -56,6 +56,7 @@ li:active {
 }
 
 .flex-container {
+  padding-bottom: 10px;
   display: flex;
   justify-content: center;
 }
