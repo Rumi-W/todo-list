@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { FixedSizeList as List } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -15,10 +17,11 @@ const TodoList = ({ handleSelectItem }) => {
   const userId = 1
 
   useEffect(() => {
-    const url = `todos?userId=${userId}`
+    const url = `todos`
+    //const url = `todos?userId=${userId}`
     const fetchData = async () => {
       try {
-        console.log('fetcing')
+        console.log('fetching')
         const response = await axios({ url, method: 'GET' })
         const data = response.data
         data.sort(sortByTitle)
@@ -44,7 +47,6 @@ const TodoList = ({ handleSelectItem }) => {
   // eslint-disable-next-line
   const filterItems = useCallback(
     debounce((str) => {
-      console.log('str', str)
       const selected = origItems
         .filter((item) => item.title.toLowerCase().indexOf(str) > -1)
         .sort(sortByTitle)
@@ -69,6 +71,26 @@ const TodoList = ({ handleSelectItem }) => {
     setSelectedItems([...selectedItems])
   }
 
+  const Row = ({ index, style }) => {
+    return (
+      <div
+        style={style}
+        role="button"
+        key={selectedItems[index].id}
+        className={index % 2 ? 'ListItemOdd' : 'ListItemEven'}
+        tabIndex={0}
+        onClick={(e) => handleSelectItem(selectedItems[index].id)}>
+        <div className="list-item_title">
+          <div>
+            <span>ID: {selectedItems[index].id}</span>
+            <span>User ID: {selectedItems[index].userId}</span>
+          </div>
+          <div>{selectedItems[index].title}</div>
+        </div>
+      </div>
+    )
+  }
+
   console.log('list', selectedItems)
   return (
     <div className="fade-in top-padding">
@@ -88,18 +110,25 @@ const TodoList = ({ handleSelectItem }) => {
         </Button>
       </Grid>
       <Grid item xs={12} className="flex-container">
-        <div className="list">
-          <ul>
-            {selectedItems.map((item) => (
-              <li
-                key={item.id}
-                className="list-item"
-                tabIndex={0}
-                onClick={(e) => handleSelectItem(item.id)}>
-                <div className="list-item_title">{item.title}</div>
-              </li>
-            ))}
-          </ul>
+        <div className="list-wrap">
+          {selectedItems.length === 0 ? (
+            <Typography variant="h6" align="center">
+              No Data returned
+            </Typography>
+          ) : (
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  className="List"
+                  height={height}
+                  itemCount={selectedItems.length}
+                  itemSize={62}
+                  width={width}>
+                  {Row}
+                </List>
+              )}
+            </AutoSizer>
+          )}
         </div>
       </Grid>
     </div>

@@ -5,7 +5,6 @@ const SearchInput = ({ filterItems, resetList }) => {
   const [searchText, setSearchText] = useState('')
 
   const handleChange = (e) => {
-    console.log('e', e.target.value)
     setSearchText(e.target.value)
     if (e.target.value === '') {
       resetList()
@@ -18,7 +17,7 @@ const SearchInput = ({ filterItems, resetList }) => {
     <input
       className="search-field"
       type="text"
-      placeholder="Search Todo Items"
+      placeholder="Search Items by Keyword."
       value={searchText}
       onChange={handleChange}
       tabIndex={-1}
