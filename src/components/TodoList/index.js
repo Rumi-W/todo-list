@@ -73,8 +73,13 @@ const TodoList = ({ items, handleSelectItem }) => {
         <div className="list">
           <ul>
             {selectedItems.map((item) => (
-              <li key={item.id} tabIndex={0} onClick={(e) => handleSelectItem(item.id)}>
-                {item.title}
+              <li
+                key={item.id}
+                className="list-item"
+                tabIndex={0}
+                onClick={(e) => handleSelectItem(item.id)}>
+                <div className="list-item_title">{item.title}</div>
+                <div>{item.completed ? 'Completed' : 'Not Yet'}</div>
               </li>
             ))}
           </ul>

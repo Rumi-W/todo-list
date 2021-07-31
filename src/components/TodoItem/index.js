@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TodoItem = () => {
+const TodoItem = ({ handleUpdateItem }) => {
   const history = useHistory()
   const { id } = useParams()
   const classes = useStyles()
@@ -61,21 +61,25 @@ const TodoItem = () => {
   const [item, setItem] = useState({})
   const [completed, setCompleted] = useState(false)
 
-  // useEffect(() => {
-  //   setCompleted(item.completed)
-  // }, [item.completed])
   useEffect(() => {
     const url = `todos?id=${id}`
     const fetchData = async () => {
-      const response = await axios({ url })
-      console.log(response.data)
-      setItem(response.data[0])
+      try {
+        const response = await axios({ url, method: 'GET' })
+        console.log(response.data)
+        setItem(response.data[0])
+        setCompleted(response.data[0].completed)
+      } catch (e) {
+        console.log('Error')
+      }
     }
     fetchData()
   }, [id])
 
   const handleStatusChange = () => {
-    setCompleted((prev) => !prev)
+    const currentStatus = completed
+    setCompleted(!currentStatus)
+    handleUpdateItem({ ...item, completed: !currentStatus })
   }
 
   const goBack = () => {

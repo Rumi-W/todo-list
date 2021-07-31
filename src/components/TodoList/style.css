@@ -8,16 +8,15 @@ ul {
   padding: 20px 30px;
 }
 li {
-  margin: 10px auto 10px auto;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  font-size: 13px;
-  height: 2rem;
+  /* margin: 10px auto 10px auto;
+  padding: 1.2rem;
+  font-size: 14px;
+  height: 1.4rem;
   border: 1px #e1e1e1 solid;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  background-color: none;
+  background-color: none; */
 }
 
 li:hover,
@@ -38,14 +37,28 @@ li:active {
   box-shadow: 5px 5px 5px gray;
 }
 
-.item {
-  width: 70vw;
-  height: 70vh;
-  overflow-y: scroll;
-  /* padding: 20px 40px 40px 20px; */
-  border: 1px #e5e5e5 solid;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px gray;
+.list-item {
+  margin: 10px auto 10px auto;
+  padding: 1.2rem;
+  font-size: 14px;
+  height: 1.4rem;
+  border: 1px #e1e1e1 solid;
+  overflow: hidden;
+  /* white-space: nowrap;
+  text-overflow: ellipsis; */
+  background-color: none;
+
+  vertical-align: middle;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.list-item_title {
+  padding-right: '10px';
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .search-field {
@@ -66,4 +79,13 @@ li:active {
 
 .material-icons {
   font-size: 18px;
+}
+
+@media screen and (max-width: 600px) {
+  .list-item {
+    padding-bottom: 2rem;
+  }
+  .list-item_title {
+    width: 100%;
+  }
 }

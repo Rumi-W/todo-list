@@ -21,10 +21,16 @@ const App = () => {
   const [items, setItems] = useState([])
 
   useEffect(() => {
+    console.log('app')
     const url = 'todos?userId=1'
     const fetchData = async () => {
-      const response = await axios({ url })
-      setItems([...response.data.sort(sortByTitle)])
+      try {
+        console.log('fetcing')
+        const response = await axios({ url, method: 'GET' })
+        setItems([...response.data.sort(sortByTitle)])
+      } catch (e) {
+        console.log('Error')
+      }
     }
     fetchData()
   }, [])
@@ -36,12 +42,25 @@ const App = () => {
     [history]
   )
 
+  const handleUpdateItem = useCallback(async (updatedItem) => {
+    console.log(updatedItem)
+    const url = `todos/${updatedItem.id}`
+    const data = JSON.stringify(updatedItem)
+
+    try {
+      const response = await axios({ url, method: 'PUT', body: data })
+      console.log(response.data)
+    } catch (e) {
+      console.log('Error')
+    }
+  }, [])
+
   console.log('app')
   return (
     <Container className="main fade-in">
       <Switch>
         <Route path="/:id">
-          <TodoItem handleSelectItem={handleSelectItem} />
+          <TodoItem handleSelectItem={handleSelectItem} handleUpdateItem={handleUpdateItem} />
         </Route>
         <Route exact path="/">
           <TodoList items={items} handleSelectItem={handleSelectItem} />
