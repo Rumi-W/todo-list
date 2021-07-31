@@ -50,14 +50,14 @@ const App = () => {
     <Container maxWidth="xl" className="fade-in" style={{ padding: 0 }}>
       <NavBar currentUserId={currentUserId} />
       <Switch>
-        <Route path="/user/:userId">
+        <Route exact path="/user/:userId">
           <TodoList
             handleSelectItem={handleSelectItem}
             goToCurrentUserData={handleSelectUser}
             goBackHome={goHome}
           />
         </Route>
-        <Route path="/:id">
+        <Route exact path="/:id">
           <TodoItem handleUpdateItem={handleUpdateItem} />
         </Route>
         <Route exact path="/">

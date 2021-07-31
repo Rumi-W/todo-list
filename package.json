@@ -16,7 +16,7 @@
     "react-window": "^1.8.6",
     "web-vitals": "^1.1.2"
   },
-  "homepage": "https://rumi-w.github.io/todo-list/",
+  "homepage": ".",
   "scripts": {
     "start": "FAST_REFRESH=false react-scripts start",
     "build": "react-scripts build",

@@ -8,13 +8,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - react-window: For list virtualization
 - materia-ui: For better presentation of some components
 
-### Demo
-
-[Open Application](https://Rumi-W.github.io/todo-list/)
-
 <br >
 
-### Scripts
+### Scripts to run the application locally
 
 #### Install
 
@@ -27,3 +23,5 @@ npm install
 ```
 npm start
 ```
+
+The application can be accessed at <http://localhost:3000/>

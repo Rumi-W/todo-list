@@ -82,10 +82,12 @@ const TodoItem = ({ handleUpdateItem }) => {
   }
 
   const goBack = () => {
-    //history.push('/')
     history.goBack()
   }
 
+  if (!item || Object.keys(item).length === 0) {
+    return <div />
+  }
   const title = `Item No. ${item.id}`
   return (
     <div className="fade-in top-padding">
