@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import NavBar from './components/NavBar'
 import TodoList from './components/TodoList'
 import TodoItem from './components/TodoItem'
 import axios from './config/axios-setup'
-import { sortByTitle } from './utils'
 import './App.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,22 +18,6 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles()
   const history = useHistory()
-  const [items, setItems] = useState([])
-
-  useEffect(() => {
-    console.log('app')
-    const url = 'todos?userId=1'
-    const fetchData = async () => {
-      try {
-        console.log('fetcing')
-        const response = await axios({ url, method: 'GET' })
-        setItems([...response.data.sort(sortByTitle)])
-      } catch (e) {
-        console.log('Error')
-      }
-    }
-    fetchData()
-  }, [])
 
   const handleSelectItem = useCallback(
     (selectedId) => {
@@ -57,13 +41,14 @@ const App = () => {
 
   console.log('app')
   return (
-    <Container className="main fade-in">
+    <Container maxWidth="xl" className="fade-in" style={{ padding: 0 }}>
+      <NavBar />
       <Switch>
         <Route path="/:id">
           <TodoItem handleSelectItem={handleSelectItem} handleUpdateItem={handleUpdateItem} />
         </Route>
         <Route exact path="/">
-          <TodoList items={items} handleSelectItem={handleSelectItem} />
+          <TodoList handleSelectItem={handleSelectItem} />
         </Route>
       </Switch>
     </Container>

@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
+import './styles.css'
 
 const SearchInput = ({ filterItems, resetList }) => {
   const [searchText, setSearchText] = useState('')
-
-  //   handleKeyPress = (e) => {
-  //     if (e.keyCode !== 13 && e.keyCode !== 9) {
-  //
-  //     }
-  //     console.log('key', e.keyCode)
-  //   }
 
   const handleChange = (e) => {
     console.log('e', e.target.value)

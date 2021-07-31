@@ -1,24 +1,8 @@
-.main {
-  padding-top: 50px;
-}
-
 ul {
   margin-top: 1px;
   list-style: none;
   padding: 20px 30px;
 }
-li {
-  /* margin: 10px auto 10px auto;
-  padding: 1.2rem;
-  font-size: 14px;
-  height: 1.4rem;
-  border: 1px #e1e1e1 solid;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  background-color: none; */
-}
-
 li:hover,
 li:focus {
   background-color: #ebebeb;
@@ -26,28 +10,24 @@ li:focus {
 li:active {
   background-color: #cccccc;
 }
-
 .list {
-  width: 70vw;
+  width: 60vw;
   height: 70vh;
   overflow-y: scroll;
-  /* padding: 20px 40px 40px 20px; */
   border: 1px #e5e5e5 solid;
   border-radius: 10px;
   box-shadow: 5px 5px 5px gray;
 }
-
 .list-item {
   margin: 10px auto 10px auto;
-  padding: 1.2rem;
+  padding: 1.2rem 2rem 1.2rem 3rem;
   font-size: 14px;
   height: 1.4rem;
   border: 1px #e1e1e1 solid;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px gray;
   overflow: hidden;
-  /* white-space: nowrap;
-  text-overflow: ellipsis; */
   background-color: none;
-
   vertical-align: middle;
   display: flex;
   flex-wrap: wrap;
@@ -55,33 +35,40 @@ li:active {
 }
 .list-item_title {
   padding-right: '10px';
+  font-size: 16px;
   width: 80%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
-.search-field {
-  padding-left: 10px;
-  outline: none;
-  cursor: default;
-  border: #919090 1px solid;
-}
-
 .flex-container {
   padding-bottom: 10px;
   display: flex;
   justify-content: center;
 }
-/* hr {
-  background-color: rgba(97, 97, 97, 0.3);
-} */
-
 .material-icons {
   font-size: 18px;
 }
 
+@media screen and (min-width: 1281px) {
+  .list {
+    width: 40vw;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .list {
+    width: 60vw;
+  }
+}
+@media screen and (max-width: 960px) {
+  .list {
+    width: 70vw;
+  }
+}
 @media screen and (max-width: 600px) {
+  .list {
+    width: 90vw;
+  }
   .list-item {
     padding-bottom: 2rem;
   }

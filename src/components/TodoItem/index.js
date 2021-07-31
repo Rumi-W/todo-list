@@ -88,7 +88,7 @@ const TodoItem = ({ handleUpdateItem }) => {
 
   const title = `Item No. ${item.id}`
   return (
-    <div className="fade-in">
+    <div className="fade-in top-padding">
       <Grid item xs={12} className={classes.flexContainer}>
         <Typography variant="h3">ToDo List Item</Typography>
       </Grid>

@@ -4,17 +4,32 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SearchInput from '../SearchInput'
 import { sortByTitle, sortByTitleDesc } from '../../utils'
-import './style.css'
+import axios from '../../config/axios-setup'
+import './styles.css'
 
-const TodoList = ({ items, handleSelectItem }) => {
+const TodoList = ({ handleSelectItem }) => {
   const [isSortDesc, setIsSortDesc] = useState(false)
+  const [origItems, setOrigItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
 
-  // onload
+  const userId = 1
+
   useEffect(() => {
-    console.log('here')
-    setSelectedItems([...items])
-  }, [items])
+    const url = `todos?userId=${userId}`
+    const fetchData = async () => {
+      try {
+        console.log('fetcing')
+        const response = await axios({ url, method: 'GET' })
+        const data = response.data
+        data.sort(sortByTitle)
+        setOrigItems([...data])
+        setSelectedItems([...data])
+      } catch (e) {
+        console.log('Error')
+      }
+    }
+    fetchData()
+  }, [])
 
   const debounce = (func, wait) => {
     let timeoutId = null
@@ -30,17 +45,17 @@ const TodoList = ({ items, handleSelectItem }) => {
   const filterItems = useCallback(
     debounce((str) => {
       console.log('str', str)
-      const selected = items
+      const selected = origItems
         .filter((item) => item.title.toLowerCase().indexOf(str) > -1)
         .sort(sortByTitle)
       setSelectedItems(selected)
     }, 250),
-    [items]
+    [origItems]
   )
 
   const resetList = useCallback(() => {
-    setSelectedItems([...items])
-  }, [items])
+    setSelectedItems([...origItems])
+  }, [origItems])
 
   const sortAsc = (e) => {
     e.stopPropagation()
@@ -56,9 +71,12 @@ const TodoList = ({ items, handleSelectItem }) => {
 
   console.log('list', selectedItems)
   return (
-    <div className="fade-in">
+    <div className="fade-in top-padding">
       <Grid item xs={12} className="flex-container">
         <Typography variant="h3">ToDo List</Typography>
+      </Grid>
+      <Grid item xs={12} className="flex-container">
+        <Typography variant="h6">User: {userId}</Typography>
       </Grid>
       <Grid item xs={12} className="flex-container">
         <SearchInput filterItems={filterItems} resetList={resetList} />
@@ -79,7 +97,6 @@ const TodoList = ({ items, handleSelectItem }) => {
                 tabIndex={0}
                 onClick={(e) => handleSelectItem(item.id)}>
                 <div className="list-item_title">{item.title}</div>
-                <div>{item.completed ? 'Completed' : 'Not Yet'}</div>
               </li>
             ))}
           </ul>
