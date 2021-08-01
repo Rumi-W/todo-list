@@ -9,7 +9,7 @@ import { muiTheme } from './theme'
 
 ReactDOM.render(
   <ThemeProvider theme={muiTheme}>
-    <BrowserRouter>
+    <BrowserRouter basename="/todo-list/">
       <App />
     </BrowserRouter>
   </ThemeProvider>,
