@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { FixedSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Button from '@material-ui/core/Button'
@@ -7,28 +7,20 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SearchInput from '../SearchInput'
 import { sortByTitle, sortByTitleDesc } from '../../utils'
-import axios from '../../config/axios-setup'
 import './styles.css'
 
-const TodoList = ({ handleSelectItem, goToCurrentUserData, goBackHome }) => {
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search)
+}
+
+const TodoList = ({ origItems, handleSelectItem, getCurrentUserData, getAllItems }) => {
+  const query = useQuery()
   const [isSortDesc, setIsSortDesc] = useState(false)
-  const [origItems, setOrigItems] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
-  const { userId } = useParams()
 
   useEffect(() => {
-    const url = userId ? `todos?userId=${userId}` : `todos`
-    const fetchData = async () => {
-      try {
-        const response = await axios({ url, method: 'GET' })
-        setOrigItems([...response.data])
-        setSelectedItems([...response.data])
-      } catch (e) {
-        console.log('Error')
-      }
-    }
-    fetchData()
-  }, [userId])
+    setSelectedItems([...origItems])
+  }, [origItems])
 
   const debounce = (func, wait) => {
     let timeoutId = null
@@ -67,14 +59,14 @@ const TodoList = ({ handleSelectItem, goToCurrentUserData, goBackHome }) => {
     setSelectedItems([...selectedItems])
   }
 
-  const goToUserData = (e) => {
+  const getUserData = (e) => {
     e.stopPropagation()
-    goToCurrentUserData()
+    getCurrentUserData()
   }
 
-  const goBackToHome = (e) => {
+  const getAll = (e) => {
     e.stopPropagation()
-    goBackHome()
+    getAllItems()
   }
 
   const Row = ({ index, style }) => {
@@ -97,6 +89,9 @@ const TodoList = ({ handleSelectItem, goToCurrentUserData, goBackHome }) => {
     )
   }
 
+  if (selectedItems.length === 0) {
+    return <div />
+  }
   return (
     <div className="fade-in top-padding">
       <Grid item xs={12} className="flex-container">
@@ -106,12 +101,12 @@ const TodoList = ({ handleSelectItem, goToCurrentUserData, goBackHome }) => {
         <Button
           size="small"
           variant="contained"
-          onClick={goToUserData}
+          onClick={getUserData}
           color="secondary"
           style={{ marginRight: '2px' }}>
           My Items
         </Button>
-        <Button size="small" variant="contained" onClick={goBackToHome} color="secondary">
+        <Button size="small" variant="contained" onClick={getAll} color="secondary">
           All Items
         </Button>
       </Grid>

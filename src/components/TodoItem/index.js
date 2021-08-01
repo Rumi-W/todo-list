@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -53,11 +53,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search)
+}
+
 const TodoItem = ({ handleUpdateItem }) => {
   const history = useHistory()
-  const { id } = useParams()
   const classes = useStyles()
+  const query = useQuery()
 
+  const [id, setId] = useState(query.get('id'))
   const [item, setItem] = useState({})
   const [completed, setCompleted] = useState(false)
 
@@ -88,7 +93,7 @@ const TodoItem = ({ handleUpdateItem }) => {
   if (!item || Object.keys(item).length === 0) {
     return <div />
   }
-  const title = `Item No. ${item.id}`
+
   return (
     <div className="fade-in top-padding">
       <Grid item xs={12} className={classes.flexContainer}>
