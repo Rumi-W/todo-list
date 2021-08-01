@@ -1,7 +1,7 @@
 .list-wrap {
   width: 60vw;
   height: 70vh;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   border: 1px #e5e5e5 solid;
   border-radius: 2px;
