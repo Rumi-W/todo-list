@@ -10,18 +10,27 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 <br >
 
-### Scripts to run the application locally
+### Demo
 
-#### Install
+[Open Application](https://Rumi-W.github.io/todo-list/)
 
-```
-npm install
-```
+<br >
 
-#### Run
+### To run the application locally
 
-```
-npm start
-```
+1. Clone the repository
+2. In package.json, replace "homepage": "https://rumi-w.github.io/todo-list/" with: <br>
+   "homepage": "\*"
+3. Install packages
+
+   ```
+   npm install
+   ```
+
+4. Run
+
+   ```
+   npm start
+   ```
 
 The application can be accessed at <http://localhost:3000/>
