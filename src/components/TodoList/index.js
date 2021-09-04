@@ -95,7 +95,9 @@ const TodoList = ({ origItems, handleSelectItem, getCurrentUserData, getAllItems
   return (
     <div className="fade-in top-padding">
       <Grid item xs={12} className="flex-container">
-        <Typography variant="h3">ToDo List</Typography>
+        <Typography variant="h3" style={{ color: 'orange' }}>
+          ToDo List Test V1
+        </Typography>
       </Grid>
       <Grid item xs={12} className="flex-container">
         <Button
